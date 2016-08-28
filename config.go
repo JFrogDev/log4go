@@ -188,7 +188,7 @@ func xmlToFileLogWriter(filename string, props []xmlProperty, enabled bool) (*Fi
 		case "maxsize":
 			maxsize = strToNumSuffix(strings.Trim(prop.Value, " \r\n"), 1024)
 		case "maxbackup":
-			maxbackup = strconv.Atoi(strings.Trim(prop.Value, " \r\n"))
+			maxbackup,_ = strconv.Atoi(strings.Trim(prop.Value, " \r\n"))
 		case "daily":
 			daily = strings.Trim(prop.Value, " \r\n") != "false"
 		case "rotate":
