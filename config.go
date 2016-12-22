@@ -75,27 +75,26 @@ func (log Logger) LoadConfiguration(filename string) {
 			fmt.Fprintf(os.Stderr, "LoadConfiguration: Error: Required child <%s> for filter missing in %s\n", "level", filename)
 			bad = true
 		}
-
 		switch xmlfilt.Level {
-		case "FINEST":
+		case "FINEST", "Finest", "finest":
 			lvl = FINEST
-		case "FINE":
+		case "FINE", "Fine", "fine":
 			lvl = FINE
-		case "DEBUG":
+		case "DEBUG", "Debug", "debug":
 			lvl = DEBUG
-		case "TRACE":
+		case "TRACE", "Trace", "trace":
 			lvl = TRACE
-		case "INFO":
+		case "INFO", "Info", "info":
 			lvl = INFO
-		case "WARNING":
+		case "WARNING", "Warning", "warning":
 			lvl = WARNING
-		case "ERROR":
+		case "ERROR", "Error", "error":
 			lvl = ERROR
-		case "CRITICAL":
+		case "CRITICAL", "Critical", "critical":
 			lvl = CRITICAL
 		default:
 			fmt.Fprintf(os.Stderr, "LoadConfiguration: Error: Required child <%s> for filter has unknown value in %s: %s\n", "level", filename, xmlfilt.Level)
-			bad = true
+			lvl = INFO
 		}
 
 		// Just so all of the required attributes are errored at the same time if missing
@@ -188,7 +187,7 @@ func xmlToFileLogWriter(filename string, props []xmlProperty, enabled bool) (*Fi
 		case "maxsize":
 			maxsize = strToNumSuffix(strings.Trim(prop.Value, " \r\n"), 1024)
 		case "maxbackup":
-			maxbackup,_ = strconv.Atoi(strings.Trim(prop.Value, " \r\n"))
+			maxbackup, _ = strconv.Atoi(strings.Trim(prop.Value, " \r\n"))
 		case "daily":
 			daily = strings.Trim(prop.Value, " \r\n") != "false"
 		case "rotate":
