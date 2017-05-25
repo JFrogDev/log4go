@@ -94,8 +94,7 @@ var logRecordWriteTests = []struct {
 }
 
 func TestConsoleLogWriter(t *testing.T) {
-	console := &ConsoleLogWriter{}
-
+	console := NewConsoleLogWriter()
 	r, w := io.Pipe()
 	go console.run(w)
 	defer console.Close()
@@ -172,7 +171,7 @@ func TestLogger(t *testing.T) {
 	if sl.Filters["stdout"].Level != WARNING {
 		t.Fatalf("NewDefaultLogger produced invalid logger (incorrect level)")
 	}
-	if len(sl) != 1 {
+	if len(sl.Filters) != 1 {
 		t.Fatalf("NewDefaultLogger produced invalid logger (incorrect map count)")
 	}
 
@@ -185,7 +184,7 @@ func TestLogger(t *testing.T) {
 	if l.Filters["stdout"].Level != DEBUG {
 		t.Fatalf("AddFilter produced invalid logger (incorrect level)")
 	}
-	if len(l) != 1 {
+	if len(l.Filters) != 1 {
 		t.Fatalf("AddFilter produced invalid logger (incorrect map count)")
 	}
 
@@ -367,8 +366,8 @@ func TestXMLConfig(t *testing.T) {
 	defer log.Close()
 
 	// Make sure we got all loggers
-	if len(log) != 3 {
-		t.Fatalf("XMLConfig: Expected 3 filters, found %d", len(log))
+	if len(log.Filters) != 3 {
+		t.Fatalf("XMLConfig: Expected 3 filters, found %d", len(log.Filters))
 	}
 
 	// Make sure they're the right keys
@@ -383,7 +382,7 @@ func TestXMLConfig(t *testing.T) {
 	}
 
 	// Make sure they're the right type
-	if _, ok := log.Filters["stdout"].LogWriter.(ConsoleLogWriter); !ok {
+	if _, ok := log.Filters["stdout"].LogWriter.(*ConsoleLogWriter); !ok {
 		t.Fatalf("XMLConfig: Expected stdout to be ConsoleLogWriter, found %T", log.Filters["stdout"].LogWriter)
 	}
 	if _, ok := log.Filters["file"].LogWriter.(*FileLogWriter); !ok {
