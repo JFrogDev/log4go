@@ -23,6 +23,7 @@ func NewConsoleLogWriter() *ConsoleLogWriter {
 	consoleWriter := &ConsoleLogWriter{
 		format: "[%T %D] [%L] (%S) %M",
 		w:      make(chan *LogRecord, LogBufferLength),
+		closed: false,
 	}
 	go consoleWriter.run(stdout)
 	return consoleWriter
