@@ -13,6 +13,8 @@ type FileLogWriter struct {
 	rec chan *LogRecord
 	rot chan bool
 
+	closed bool
+
 	// The opened file
 	filename string
 	file     *os.File
@@ -42,10 +44,13 @@ type FileLogWriter struct {
 
 // This is the FileLogWriter's output method
 func (w *FileLogWriter) LogWrite(rec *LogRecord) {
-	w.rec <- rec
+	if !w.closed {
+		w.rec <- rec
+	}
 }
 
 func (w *FileLogWriter) Close() {
+	w.closed = true
 	close(w.rec)
 	w.file.Sync()
 }
