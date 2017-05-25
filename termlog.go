@@ -15,6 +15,7 @@ var stdout io.Writer = os.Stdout
 type ConsoleLogWriter struct {
 	format string
 	w      chan *LogRecord
+	closed bool
 }
 
 // This creates a new ConsoleLogWriter
@@ -38,12 +39,15 @@ func (c *ConsoleLogWriter) run(out io.Writer) {
 // This is the ConsoleLogWriter's output method.  This will block if the output
 // buffer is full.
 func (c *ConsoleLogWriter) LogWrite(rec *LogRecord) {
-	c.w <- rec
+	if !c.closed {
+		c.w <- rec
+	}
 }
 
 // Close stops the logger from sending messages to standard output.  Attempts to
 // send log messages to this logger after a Close have undefined behavior.
 func (c *ConsoleLogWriter) Close() {
+	c.closed = true
 	close(c.w)
 	time.Sleep(50 * time.Millisecond) // Try to give console I/O time to complete
 }

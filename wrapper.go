@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	Global Logger
+	Global *Logger
 )
 
 func init() {
