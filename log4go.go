@@ -320,10 +320,18 @@ func (log *Logger) Finest(arg0 interface{}, args ...interface{}) {
 	const lvl = FINEST
 	log.upToInfo(lvl, arg0, args...)
 }
+func (log *Logger) Finestf(arg0 interface{}, args ...interface{}) {
+	const lvl = FINEST
+	log.upToInfo(lvl, arg0, args...)
+}
 
 // Fine logs a message at the fine log level.
 // See Debug for an explanation of the arguments.
 func (log *Logger) Fine(arg0 interface{}, args ...interface{}) {
+	const lvl = FINE
+	log.upToInfo(lvl, arg0, args...)
+}
+func (log *Logger) Finef(arg0 interface{}, args ...interface{}) {
 	const lvl = FINE
 	log.upToInfo(lvl, arg0, args...)
 }
@@ -344,6 +352,10 @@ func (log *Logger) Debug(arg0 interface{}, args ...interface{}) {
 	const lvl = DEBUG
 	log.upToInfo(lvl, arg0, args...)
 }
+func (log *Logger) Debugf(arg0 interface{}, args ...interface{}) {
+	const lvl = DEBUG
+	log.upToInfo(lvl, arg0, args...)
+}
 
 // Trace logs a message at the trace log level.
 // See Debug for an explanation of the arguments.
@@ -351,10 +363,18 @@ func (log *Logger) Trace(arg0 interface{}, args ...interface{}) {
 	const lvl = TRACE
 	log.upToInfo(lvl, arg0, args...)
 }
+func (log *Logger) Tracef(arg0 interface{}, args ...interface{}) {
+	const lvl = TRACE
+	log.upToInfo(lvl, arg0, args...)
+}
 
 // Info logs a message at the info log level.
 // See Debug for an explanation of the arguments.
 func (log *Logger) Info(arg0 interface{}, args ...interface{}) {
+	const lvl = INFO
+	log.upToInfo(lvl, arg0, args...)
+}
+func (log *Logger) Infof(arg0 interface{}, args ...interface{}) {
 	const lvl = INFO
 	log.upToInfo(lvl, arg0, args...)
 }
@@ -385,6 +405,10 @@ func (log *Logger) Warn(arg0 interface{}, args ...interface{}) error {
 	const lvl = WARNING
 	return log.overWarning(lvl, arg0, args...)
 }
+func (log *Logger) Warnf(arg0 interface{}, args ...interface{}) error {
+	const lvl = WARNING
+	return log.overWarning(lvl, arg0, args...)
+}
 
 // Error logs a message at the error log level and returns the formatted error,
 // See Warn for an explanation of the performance and Debug for an explanation
@@ -393,11 +417,19 @@ func (log *Logger) Error(arg0 interface{}, args ...interface{}) error {
 	const lvl = ERROR
 	return log.overWarning(lvl, arg0, args...)
 }
+func (log *Logger) Errorf(arg0 interface{}, args ...interface{}) error {
+	const lvl = ERROR
+	return log.overWarning(lvl, arg0, args...)
+}
 
 // Critical logs a message at the critical log level and returns the formatted error,
 // See Warn for an explanation of the performance and Debug for an explanation
 // of the parameters.
 func (log *Logger) Critical(arg0 interface{}, args ...interface{}) error {
+	const lvl = CRITICAL
+	return log.overWarning(lvl, arg0, args...)
+}
+func (log *Logger) Criticalf(arg0 interface{}, args ...interface{}) error {
 	const lvl = CRITICAL
 	return log.overWarning(lvl, arg0, args...)
 }
