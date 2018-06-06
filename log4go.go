@@ -417,9 +417,9 @@ func (log *Logger) Error(arg0 interface{}, args ...interface{}) error {
 	const lvl = ERROR
 	return log.overWarning(lvl, arg0, args...)
 }
-func (log *Logger) Errorf(arg0 interface{}, args ...interface{}) error {
+func (log *Logger) Errorf(format string, args ...interface{}) error {
 	const lvl = ERROR
-	return log.overWarning(lvl, arg0, args...)
+	return log.overWarning(lvl, format, args...)
 }
 
 // Critical logs a message at the critical log level and returns the formatted error,
