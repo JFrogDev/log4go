@@ -1,1 +1,1 @@
-module github.com/JFrogDev/log4go
+module github.com/jfrog/log4go
